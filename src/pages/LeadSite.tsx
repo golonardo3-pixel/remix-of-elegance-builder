@@ -41,8 +41,9 @@ const LeadSite = () => {
   }
 
   const content = getNicheContent(lead.niche);
+  const displayName = professionalizeName(lead.company_name, lead.niche);
   const whatsappLink = `https://wa.me/${lead.phone}?text=${encodeURIComponent(content.whatsappMessage)}`;
-  const mapsQuery = encodeURIComponent(`${lead.company_name} ${lead.city}`);
+  const mapsQuery = encodeURIComponent(`${displayName} ${lead.city}`);
   const mapsEmbedUrl = `https://www.google.com/maps?q=${mapsQuery}&output=embed`;
   const mapsLink = `https://www.google.com/maps/search/${mapsQuery}`;
   const googleReviewUrl = `https://search.google.com/local/writereview?placeid=_`;
