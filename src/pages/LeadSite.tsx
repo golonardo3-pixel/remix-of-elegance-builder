@@ -74,7 +74,7 @@ const LeadSite = () => {
         <section className="relative min-h-[70vh] flex items-end">
           <img
             src={content.heroImage}
-            alt={`${lead.company_name} - ${lead.niche} em ${lead.city}`}
+            alt={`${displayName} - ${lead.niche} em ${lead.city}`}
             className="absolute inset-0 w-full h-full object-cover"
             width={1280}
             height={832}
