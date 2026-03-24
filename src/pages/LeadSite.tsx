@@ -2,10 +2,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { getNicheContent } from "@/lib/niche-content";
-import { MessageCircle, Star, MapPin, Phone, Clock } from "lucide-react";
-
-// Reuses the same template design as the original salon site
-// but dynamically replaces content based on lead data
+import { MessageCircle, Star, MapPin, Phone, Clock, ExternalLink } from "lucide-react";
 
 const LeadSite = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -44,7 +41,12 @@ const LeadSite = () => {
   }
 
   const content = getNicheContent(lead.niche);
-  const whatsappLink = `https://wa.me/${lead.phone}?text=${encodeURIComponent("Olá! Gostaria de agendar um horário.")}`;
+  const whatsappLink = `https://wa.me/${lead.phone}?text=${encodeURIComponent(content.whatsappMessage)}`;
+  const mapsQuery = encodeURIComponent(`${lead.company_name} ${lead.city}`);
+  const mapsEmbedUrl = `https://www.google.com/maps?q=${mapsQuery}&output=embed`;
+  const mapsLink = `https://www.google.com/maps/search/${mapsQuery}`;
+  const googleReviewUrl = `https://search.google.com/local/writereview?placeid=_`;
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(mapsLink)}`;
 
   return (
     <>
@@ -61,20 +63,31 @@ const LeadSite = () => {
             className="flex items-center gap-2 bg-primary text-primary-foreground px-4 py-2 text-sm font-medium rounded transition-colors hover:bg-primary/90"
           >
             <MessageCircle className="w-4 h-4" />
-            Agendar
+            {content.ctaText}
           </a>
         </div>
       </header>
 
       <main className="pt-[52px]">
         {/* Hero */}
-        <section className="relative min-h-[70vh] flex items-end bg-primary">
+        <section className="relative min-h-[70vh] flex items-end">
+          <img
+            src={content.heroImage}
+            alt={`${lead.company_name} - ${lead.niche} em ${lead.city}`}
+            className="absolute inset-0 w-full h-full object-cover"
+            width={1280}
+            height={832}
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/40 to-foreground/20" />
           <div className="relative z-10 px-5 pb-12 md:pb-20 max-w-5xl mx-auto w-full">
             <div className="gold-divider mb-5 mx-0" />
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold text-primary-foreground leading-tight mb-4 whitespace-pre-line">
+            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-semibold text-primary-foreground leading-tight mb-3 whitespace-pre-line">
               {content.heroTitle}
             </h2>
+            <div className="flex items-center gap-2 mb-4">
+              <MapPin className="w-4 h-4 text-gold" />
+              <span className="text-primary-foreground/80 text-sm font-medium">{lead.city}</span>
+            </div>
             <p className="text-primary-foreground/80 text-base md:text-lg max-w-md mb-8 font-body">
               {content.heroSubtitle}
             </p>
@@ -85,7 +98,7 @@ const LeadSite = () => {
               className="inline-flex items-center gap-2 bg-gold text-foreground px-6 py-3 font-medium rounded transition-all hover:brightness-110"
             >
               <MessageCircle className="w-5 h-5" />
-              Agende pelo WhatsApp
+              Falar no WhatsApp
             </a>
           </div>
         </section>
@@ -119,31 +132,126 @@ const LeadSite = () => {
           </div>
         </section>
 
-        {/* Reviews */}
+        {/* Reviews / Social Proof */}
         <section className="salon-section">
           <div className="text-center mb-12">
             <p className="text-gold uppercase text-xs tracking-[0.2em] font-medium mb-3">Depoimentos</p>
             <h2 className="salon-heading mb-4">O que nossos clientes dizem</h2>
-            <div className="gold-divider" />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {content.reviews.map((r) => (
-              <div key={r.name} className="bg-secondary rounded p-6">
-                <div className="flex gap-0.5 mb-3">
-                  {Array.from({ length: r.rating }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-gold text-gold" />
+            <div className="gold-divider mb-4" />
+            {content.reviewCount > 0 && (
+              <div className="flex items-center justify-center gap-2 mt-4">
+                <div className="flex gap-0.5">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-gold text-gold" />
                   ))}
                 </div>
-                <p className="text-foreground text-sm leading-relaxed mb-4 italic">"{r.text}"</p>
-                <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">— {r.name}</p>
+                <span className="text-muted-foreground text-sm font-medium">
+                  {content.reviewCount} avaliações
+                </span>
               </div>
-            ))}
+            )}
+          </div>
+          {content.reviews.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {content.reviews.map((r) => (
+                <div key={r.name} className="bg-secondary rounded p-6">
+                  <div className="flex gap-0.5 mb-3">
+                    {Array.from({ length: r.rating }).map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-gold text-gold" />
+                    ))}
+                  </div>
+                  <p className="text-foreground text-sm leading-relaxed mb-4 italic">"{r.text}"</p>
+                  <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">— {r.name}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-8">
+              <p className="text-muted-foreground text-lg">Seja o primeiro a avaliar!</p>
+            </div>
+          )}
+        </section>
+
+        {/* Google Maps */}
+        <section className="bg-secondary py-16">
+          <div className="px-5 md:px-8 lg:px-16 max-w-5xl mx-auto">
+            <div className="text-center mb-10">
+              <p className="text-gold uppercase text-xs tracking-[0.2em] font-medium mb-3">Localização</p>
+              <h2 className="salon-heading mb-4">Onde estamos</h2>
+              <div className="gold-divider" />
+            </div>
+            <div className="rounded overflow-hidden mb-6">
+              <iframe
+                title={`Localização de ${lead.company_name}`}
+                src={mapsEmbedUrl}
+                width="100%"
+                height="350"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+            <div className="text-center">
+              <a
+                href={mapsLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 font-medium rounded transition-colors hover:bg-primary/90"
+              >
+                <ExternalLink className="w-4 h-4" />
+                Ver no Google Maps
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* QR Code */}
+        <section className="salon-section">
+          <div className="text-center max-w-md mx-auto">
+            <p className="text-gold uppercase text-xs tracking-[0.2em] font-medium mb-3">Avalie-nos</p>
+            <h2 className="salon-heading mb-4">Sua opinião importa</h2>
+            <div className="gold-divider mb-6" />
+            <p className="text-muted-foreground text-sm mb-6">
+              Escaneie o QR Code e avalie no Google
+            </p>
+            <div className="inline-block bg-white p-4 rounded-lg shadow-md">
+              <img
+                src={qrCodeUrl}
+                alt="QR Code para avaliar no Google"
+                width={200}
+                height={200}
+                loading="lazy"
+                className="block"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Final CTA */}
+        <section className="bg-primary py-16">
+          <div className="px-5 md:px-8 lg:px-16 max-w-5xl mx-auto text-center">
+            <h2 className="font-display text-3xl md:text-4xl font-semibold text-primary-foreground mb-4">
+              Pronto para começar?
+            </h2>
+            <p className="text-primary-foreground/70 text-base md:text-lg max-w-md mx-auto mb-8 font-body">
+              Entre em contato agora mesmo e agende seu horário.
+            </p>
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-gold text-foreground px-8 py-4 text-lg font-medium rounded transition-all hover:brightness-110"
+            >
+              <MessageCircle className="w-6 h-6" />
+              {content.ctaText}
+            </a>
           </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="bg-primary text-primary-foreground">
+      <footer className="bg-foreground text-primary-foreground">
         <div className="px-5 md:px-8 lg:px-16 max-w-5xl mx-auto py-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
