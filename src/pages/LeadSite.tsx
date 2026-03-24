@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { getNicheContent } from "@/lib/niche-content";
+import { getNicheContent, professionalizeName } from "@/lib/niche-content";
 import { MessageCircle, Star, MapPin, Phone, Clock, ExternalLink } from "lucide-react";
 
 const LeadSite = () => {
