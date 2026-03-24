@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { getNicheContent } from "@/lib/niche-content";
+import { getNicheContent, professionalizeName } from "@/lib/niche-content";
 import { MessageCircle, Star, MapPin, Phone, Clock, ExternalLink } from "lucide-react";
 
 const LeadSite = () => {
@@ -41,8 +41,9 @@ const LeadSite = () => {
   }
 
   const content = getNicheContent(lead.niche);
+  const displayName = professionalizeName(lead.company_name, lead.niche);
   const whatsappLink = `https://wa.me/${lead.phone}?text=${encodeURIComponent(content.whatsappMessage)}`;
-  const mapsQuery = encodeURIComponent(`${lead.company_name} ${lead.city}`);
+  const mapsQuery = encodeURIComponent(`${displayName} ${lead.city}`);
   const mapsEmbedUrl = `https://www.google.com/maps?q=${mapsQuery}&output=embed`;
   const mapsLink = `https://www.google.com/maps/search/${mapsQuery}`;
   const googleReviewUrl = `https://search.google.com/local/writereview?placeid=_`;
@@ -54,7 +55,7 @@ const LeadSite = () => {
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="flex items-center justify-between px-5 py-3 max-w-5xl mx-auto">
           <h1 className="font-display text-xl font-semibold tracking-tight text-foreground">
-            {lead.company_name}
+            {displayName}
           </h1>
           <a
             href={whatsappLink}
@@ -73,7 +74,7 @@ const LeadSite = () => {
         <section className="relative min-h-[70vh] flex items-end">
           <img
             src={content.heroImage}
-            alt={`${lead.company_name} - ${lead.niche} em ${lead.city}`}
+            alt={`${displayName} - ${lead.niche} em ${lead.city}`}
             className="absolute inset-0 w-full h-full object-cover"
             width={1280}
             height={832}
@@ -182,7 +183,7 @@ const LeadSite = () => {
             </div>
             <div className="rounded overflow-hidden mb-6">
               <iframe
-                title={`Localização de ${lead.company_name}`}
+                title={`Localização de ${displayName}`}
                 src={mapsEmbedUrl}
                 width="100%"
                 height="350"
@@ -255,7 +256,7 @@ const LeadSite = () => {
         <div className="px-5 md:px-8 lg:px-16 max-w-5xl mx-auto py-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="font-display text-lg font-semibold mb-3">{lead.company_name}</h3>
+              <h3 className="font-display text-lg font-semibold mb-3">{displayName}</h3>
               <p className="text-primary-foreground/70 text-sm leading-relaxed">{content.footerTagline}</p>
             </div>
             <div className="space-y-3">
@@ -280,7 +281,7 @@ const LeadSite = () => {
           </div>
           <div className="border-t border-primary-foreground/10 mt-10 pt-6 text-center">
             <p className="text-primary-foreground/50 text-xs">
-              © {new Date().getFullYear()} {lead.company_name}. Todos os direitos reservados.
+              © {new Date().getFullYear()} {displayName}. Todos os direitos reservados.
             </p>
           </div>
         </div>
