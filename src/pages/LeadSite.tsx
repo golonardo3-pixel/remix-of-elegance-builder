@@ -183,7 +183,7 @@ const LeadSite = () => {
             </div>
             <div className="rounded overflow-hidden mb-6">
               <iframe
-                title={`Localização de ${lead.company_name}`}
+                title={`Localização de ${displayName}`}
                 src={mapsEmbedUrl}
                 width="100%"
                 height="350"
