@@ -256,7 +256,7 @@ const LeadSite = () => {
         <div className="px-5 md:px-8 lg:px-16 max-w-5xl mx-auto py-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="font-display text-lg font-semibold mb-3">{lead.company_name}</h3>
+              <h3 className="font-display text-lg font-semibold mb-3">{displayName}</h3>
               <p className="text-primary-foreground/70 text-sm leading-relaxed">{content.footerTagline}</p>
             </div>
             <div className="space-y-3">
