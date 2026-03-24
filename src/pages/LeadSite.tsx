@@ -281,7 +281,7 @@ const LeadSite = () => {
           </div>
           <div className="border-t border-primary-foreground/10 mt-10 pt-6 text-center">
             <p className="text-primary-foreground/50 text-xs">
-              © {new Date().getFullYear()} {lead.company_name}. Todos os direitos reservados.
+              © {new Date().getFullYear()} {displayName}. Todos os direitos reservados.
             </p>
           </div>
         </div>
