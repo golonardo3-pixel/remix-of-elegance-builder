@@ -55,7 +55,7 @@ const LeadSite = () => {
       <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="flex items-center justify-between px-5 py-3 max-w-5xl mx-auto">
           <h1 className="font-display text-xl font-semibold tracking-tight text-foreground">
-            {lead.company_name}
+            {displayName}
           </h1>
           <a
             href={whatsappLink}
