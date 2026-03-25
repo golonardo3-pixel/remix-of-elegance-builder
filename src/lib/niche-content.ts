@@ -24,12 +24,14 @@ export interface NicheContent {
   servicesLabel: string;
   servicesHeading: string;
   services: { title: string; desc: string }[];
+  differentials: { title: string; desc: string }[];
   reviews: { name: string; text: string; rating: number }[];
   reviewCount: number;
   footerTagline: string;
   ctaText: string;
   whatsappMessage: string;
   nameSuffix?: string;
+  style: "urgency" | "visual" | "trust" | "default";
 }
 
 const nicheContentMap: Record<string, NicheContent> = {
