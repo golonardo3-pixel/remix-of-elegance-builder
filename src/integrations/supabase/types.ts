@@ -19,7 +19,9 @@ export type Database = {
           city: string
           company_name: string
           created_at: string
+          google_maps_link: string | null
           id: string
+          instagram: string | null
           niche: string
           phone: string
           slug: string
@@ -29,7 +31,9 @@ export type Database = {
           city: string
           company_name: string
           created_at?: string
+          google_maps_link?: string | null
           id?: string
+          instagram?: string | null
           niche: string
           phone: string
           slug: string
@@ -39,7 +43,9 @@ export type Database = {
           city?: string
           company_name?: string
           created_at?: string
+          google_maps_link?: string | null
           id?: string
+          instagram?: string | null
           niche?: string
           phone?: string
           slug?: string
