@@ -40,6 +40,8 @@ const AddLeadDialog = ({ open, onOpenChange }: Props) => {
   const [niche, setNiche] = useState("");
   const [city, setCity] = useState("");
   const [phone, setPhone] = useState("");
+  const [googleMapsLink, setGoogleMapsLink] = useState("");
+  const [instagram, setInstagram] = useState("");
   const [createdSlug, setCreatedSlug] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
@@ -53,6 +55,8 @@ const AddLeadDialog = ({ open, onOpenChange }: Props) => {
         city: city.trim(),
         phone: whatsappPhone,
         slug,
+        google_maps_link: googleMapsLink.trim() || null,
+        instagram: instagram.trim() || null,
       });
       if (error) throw error;
       return slug;
@@ -79,6 +83,8 @@ const AddLeadDialog = ({ open, onOpenChange }: Props) => {
       setNiche("");
       setCity("");
       setPhone("");
+      setGoogleMapsLink("");
+      setInstagram("");
       setCreatedSlug(null);
     }
     onOpenChange(val);
@@ -101,7 +107,7 @@ const AddLeadDialog = ({ open, onOpenChange }: Props) => {
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="font-display">Novo Lead</DialogTitle>
         </DialogHeader>
@@ -148,6 +154,30 @@ const AddLeadDialog = ({ open, onOpenChange }: Props) => {
               placeholder="(11) 99999-9999"
             />
           </div>
+
+          <div className="pt-2 border-t border-border">
+            <p className="text-xs text-muted-foreground mb-3">Campos opcionais</p>
+          </div>
+
+          <div>
+            <Label htmlFor="maps">Link do Google Maps</Label>
+            <Input
+              id="maps"
+              value={googleMapsLink}
+              onChange={(e) => setGoogleMapsLink(e.target.value)}
+              placeholder="https://maps.google.com/..."
+            />
+          </div>
+          <div>
+            <Label htmlFor="instagram">Instagram</Label>
+            <Input
+              id="instagram"
+              value={instagram}
+              onChange={(e) => setInstagram(e.target.value)}
+              placeholder="@seuinstagram"
+            />
+          </div>
+
           <Button
             onClick={() => mutation.mutate()}
             disabled={!isValid || mutation.isPending}
