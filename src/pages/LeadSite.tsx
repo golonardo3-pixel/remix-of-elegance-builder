@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { getNicheContent, professionalizeName } from "@/lib/niche-content";
 import { getGalleryImages, getNicheColors } from "@/lib/gallery-images";
-import { MessageCircle, Star, MapPin, Phone, Clock, ExternalLink } from "lucide-react";
+import { MessageCircle, Star, MapPin, Phone, Clock, ExternalLink, Instagram, CheckCircle2 } from "lucide-react";
 import LeadSiteGallery from "@/components/LeadSiteGallery";
 
 const LeadSite = () => {
@@ -47,12 +47,21 @@ const LeadSite = () => {
   const gallery = getGalleryImages(lead.niche);
   const colors = getNicheColors(lead.niche);
   const whatsappLink = `https://wa.me/${lead.phone}?text=${encodeURIComponent(content.whatsappMessage)}`;
+
+  // Maps: use custom link if provided, otherwise auto-generate
+  const hasCustomMaps = !!(lead as any).google_maps_link;
   const mapsQuery = encodeURIComponent(`${displayName} ${lead.city}`);
-  const mapsEmbedUrl = `https://www.google.com/maps?q=${mapsQuery}&output=embed`;
-  const mapsLink = `https://www.google.com/maps/search/${mapsQuery}`;
+  const mapsEmbedUrl = hasCustomMaps
+    ? `https://www.google.com/maps?q=${encodeURIComponent((lead as any).google_maps_link)}&output=embed`
+    : `https://www.google.com/maps?q=${mapsQuery}&output=embed`;
+  const mapsLink = hasCustomMaps ? (lead as any).google_maps_link : `https://www.google.com/maps/search/${mapsQuery}`;
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(mapsLink)}`;
 
-  // Dynamic niche color CSS variables
+  const instagramHandle = (lead as any).instagram;
+  const instagramUrl = instagramHandle
+    ? `https://instagram.com/${instagramHandle.replace(/^@/, "")}`
+    : null;
+
   const nicheStyle = {
     "--niche-primary": colors.primary,
     "--niche-primary-fg": colors.primaryForeground,
@@ -71,16 +80,23 @@ const LeadSite = () => {
           <h1 className="font-display text-xl font-semibold tracking-tight text-foreground">
             {displayName}
           </h1>
-          <a
-            href={whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded transition-colors"
-            style={{ backgroundColor: `hsl(${colors.primary})`, color: `hsl(${colors.primaryForeground})` }}
-          >
-            <MessageCircle className="w-4 h-4" />
-            {content.ctaText}
-          </a>
+          <div className="flex items-center gap-2">
+            {instagramUrl && (
+              <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg hover:bg-muted transition-colors" aria-label="Instagram">
+                <Instagram className="w-5 h-5 text-foreground" />
+              </a>
+            )}
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded transition-colors"
+              style={{ backgroundColor: `hsl(${colors.primary})`, color: `hsl(${colors.primaryForeground})` }}
+            >
+              <MessageCircle className="w-4 h-4" />
+              {content.ctaText}
+            </a>
+          </div>
         </div>
       </header>
 
@@ -115,7 +131,7 @@ const LeadSite = () => {
               style={{ backgroundColor: `hsl(${colors.accent})`, color: `hsl(${colors.primary})` }}
             >
               <MessageCircle className="w-5 h-5" />
-              Agendar agora
+              Chamar no WhatsApp agora
             </a>
           </div>
         </section>
@@ -156,99 +172,121 @@ const LeadSite = () => {
           </div>
         </section>
 
-        {/* Reviews / Social Proof */}
+        {/* Differentials */}
         <section className="py-20 px-5 md:px-8 lg:px-16 max-w-5xl mx-auto">
           <div className="text-center mb-14">
-            <p className="uppercase text-xs tracking-[0.2em] font-medium mb-3" style={{ color: `hsl(${colors.accent})` }}>Depoimentos</p>
-            <h2 className="salon-heading mb-5">Clientes satisfeitos</h2>
-            <div className="w-16 h-0.5 mx-auto mb-5" style={{ backgroundColor: `hsl(${colors.accent})` }} />
-            {content.reviewCount > 0 && (
-              <div className="flex items-center justify-center gap-2 mt-4">
-                <div className="flex gap-0.5">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="w-5 h-5" style={{ fill: `hsl(${colors.accent})`, color: `hsl(${colors.accent})` }} />
-                  ))}
+            <p className="uppercase text-xs tracking-[0.2em] font-medium mb-3" style={{ color: `hsl(${colors.accent})` }}>Diferenciais</p>
+            <h2 className="salon-heading mb-5">Por que nos escolher</h2>
+            <div className="w-16 h-0.5 mx-auto" style={{ backgroundColor: `hsl(${colors.accent})` }} />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {content.differentials.map((d) => (
+              <div key={d.title} className="flex gap-4 p-6 rounded-lg border border-border bg-background hover:shadow-md transition-shadow">
+                <CheckCircle2 className="w-6 h-6 shrink-0 mt-0.5" style={{ color: `hsl(${colors.accent})` }} />
+                <div>
+                  <h3 className="font-display text-lg font-semibold mb-2 text-foreground">{d.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{d.desc}</p>
                 </div>
-                <span className="text-muted-foreground text-sm font-medium">
-                  {content.reviewCount} avaliações
-                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Reviews / Social Proof */}
+        <section className="py-20" style={{ backgroundColor: `hsl(${colors.secondary})` }}>
+          <div className="px-5 md:px-8 lg:px-16 max-w-5xl mx-auto">
+            <div className="text-center mb-14">
+              <p className="uppercase text-xs tracking-[0.2em] font-medium mb-3" style={{ color: `hsl(${colors.accent})` }}>Depoimentos</p>
+              <h2 className="salon-heading mb-5">Clientes satisfeitos</h2>
+              <div className="w-16 h-0.5 mx-auto mb-5" style={{ backgroundColor: `hsl(${colors.accent})` }} />
+              {content.reviewCount > 0 && (
+                <div className="flex items-center justify-center gap-2 mt-4">
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="w-5 h-5" style={{ fill: `hsl(${colors.accent})`, color: `hsl(${colors.accent})` }} />
+                    ))}
+                  </div>
+                  <span className="text-muted-foreground text-sm font-medium">
+                    {content.reviewCount} avaliações
+                  </span>
+                </div>
+              )}
+            </div>
+            {content.reviews.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {content.reviews.map((r) => (
+                  <div key={r.name} className="rounded-lg p-8 shadow-sm bg-background">
+                    <div className="flex gap-0.5 mb-4">
+                      {Array.from({ length: r.rating }).map((_, i) => (
+                        <Star key={i} className="w-4 h-4" style={{ fill: `hsl(${colors.accent})`, color: `hsl(${colors.accent})` }} />
+                      ))}
+                    </div>
+                    <p className="text-foreground text-sm leading-relaxed mb-5 italic">"{r.text}"</p>
+                    <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">— {r.name}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-muted-foreground text-lg">Seja o primeiro cliente a avaliar!</p>
               </div>
             )}
           </div>
-          {content.reviews.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {content.reviews.map((r) => (
-                <div key={r.name} className="rounded-lg p-8 shadow-sm" style={{ backgroundColor: `hsl(${colors.secondary})` }}>
-                  <div className="flex gap-0.5 mb-4">
-                    {Array.from({ length: r.rating }).map((_, i) => (
-                      <Star key={i} className="w-4 h-4" style={{ fill: `hsl(${colors.accent})`, color: `hsl(${colors.accent})` }} />
-                    ))}
-                  </div>
-                  <p className="text-foreground text-sm leading-relaxed mb-5 italic">"{r.text}"</p>
-                  <p className="text-muted-foreground text-xs font-medium uppercase tracking-wider">— {r.name}</p>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-8">
-              <p className="text-muted-foreground text-lg">Seja o primeiro cliente a avaliar!</p>
-            </div>
-          )}
         </section>
 
         {/* Google Maps */}
-        <section className="py-20" style={{ backgroundColor: `hsl(${colors.secondary})` }}>
-          <div className="px-5 md:px-8 lg:px-16 max-w-5xl mx-auto">
-            <div className="text-center mb-12">
-              <p className="uppercase text-xs tracking-[0.2em] font-medium mb-3" style={{ color: `hsl(${colors.accent})` }}>Localização</p>
-              <h2 className="salon-heading mb-5">Onde estamos</h2>
-              <div className="w-16 h-0.5 mx-auto" style={{ backgroundColor: `hsl(${colors.accent})` }} />
-            </div>
-            <div className="rounded-lg overflow-hidden mb-8 shadow-md">
-              <iframe
-                title={`Localização de ${displayName}`}
-                src={mapsEmbedUrl}
-                width="100%"
-                height="400"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-            <div className="text-center">
-              <a
-                href={mapsLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 font-medium rounded-lg transition-colors"
-                style={{ backgroundColor: `hsl(${colors.primary})`, color: `hsl(${colors.primaryForeground})` }}
-              >
-                <ExternalLink className="w-4 h-4" />
-                Ver no Google Maps
-              </a>
-            </div>
+        <section className="py-20 px-5 md:px-8 lg:px-16 max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="uppercase text-xs tracking-[0.2em] font-medium mb-3" style={{ color: `hsl(${colors.accent})` }}>Localização</p>
+            <h2 className="salon-heading mb-5">Onde estamos</h2>
+            <div className="w-16 h-0.5 mx-auto" style={{ backgroundColor: `hsl(${colors.accent})` }} />
+          </div>
+          <div className="rounded-lg overflow-hidden mb-8 shadow-md">
+            <iframe
+              title={`Localização de ${displayName}`}
+              src={mapsEmbedUrl}
+              width="100%"
+              height="400"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+          <div className="text-center">
+            <a
+              href={mapsLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 font-medium rounded-lg transition-colors"
+              style={{ backgroundColor: `hsl(${colors.primary})`, color: `hsl(${colors.primaryForeground})` }}
+            >
+              <ExternalLink className="w-4 h-4" />
+              Ver no Google Maps
+            </a>
           </div>
         </section>
 
         {/* QR Code */}
-        <section className="py-20 px-5 md:px-8 lg:px-16 max-w-5xl mx-auto">
-          <div className="text-center max-w-md mx-auto">
-            <p className="uppercase text-xs tracking-[0.2em] font-medium mb-3" style={{ color: `hsl(${colors.accent})` }}>Avalie-nos</p>
-            <h2 className="salon-heading mb-5">Sua opinião importa</h2>
-            <div className="w-16 h-0.5 mx-auto mb-8" style={{ backgroundColor: `hsl(${colors.accent})` }} />
-            <p className="text-muted-foreground text-sm mb-8">
-              Escaneie o QR Code e avalie no Google
-            </p>
-            <div className="inline-block bg-white p-5 rounded-xl shadow-lg">
-              <img
-                src={qrCodeUrl}
-                alt="QR Code para avaliar no Google"
-                width={200}
-                height={200}
-                loading="lazy"
-                className="block"
-              />
+        <section className="py-20" style={{ backgroundColor: `hsl(${colors.secondary})` }}>
+          <div className="px-5 md:px-8 lg:px-16 max-w-5xl mx-auto">
+            <div className="text-center max-w-md mx-auto">
+              <p className="uppercase text-xs tracking-[0.2em] font-medium mb-3" style={{ color: `hsl(${colors.accent})` }}>Avalie-nos</p>
+              <h2 className="salon-heading mb-5">Sua opinião importa</h2>
+              <div className="w-16 h-0.5 mx-auto mb-8" style={{ backgroundColor: `hsl(${colors.accent})` }} />
+              <p className="text-muted-foreground text-sm mb-8">
+                Escaneie o QR Code e avalie no Google
+              </p>
+              <div className="inline-block bg-white p-5 rounded-xl shadow-lg">
+                <img
+                  src={qrCodeUrl}
+                  alt="QR Code para avaliar no Google"
+                  width={200}
+                  height={200}
+                  loading="lazy"
+                  className="block"
+                />
+              </div>
             </div>
           </div>
         </section>
@@ -293,6 +331,12 @@ const LeadSite = () => {
                 <Phone className="w-4 h-4 shrink-0" style={{ color: `hsl(${colors.accent})` }} />
                 <span>{lead.phone}</span>
               </div>
+              {instagramUrl && (
+                <a href={instagramUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-sm hover:underline" style={{ color: `hsl(${colors.primaryForeground} / 0.8)` }}>
+                  <Instagram className="w-4 h-4 shrink-0" style={{ color: `hsl(${colors.accent})` }} />
+                  <span>{instagramHandle}</span>
+                </a>
+              )}
             </div>
             <div>
               <div className="flex items-start gap-3 text-sm" style={{ color: `hsl(${colors.primaryForeground} / 0.8)` }}>
