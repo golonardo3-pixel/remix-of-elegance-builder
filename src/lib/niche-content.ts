@@ -50,6 +50,12 @@ const nicheContentMap: Record<string, NicheContent> = {
       { title: "Estética Facial", desc: "Limpeza de pele, hidratação profunda e protocolos anti-idade." },
       { title: "Maquiagem", desc: "Maquiagem social, para noivas, debutantes e produções especiais." },
     ],
+    differentials: [
+      { title: "Produtos Premium", desc: "Trabalhamos apenas com marcas reconhecidas e de alta performance." },
+      { title: "Profissionais Especializados", desc: "Equipe treinada e atualizada com as últimas tendências." },
+      { title: "Ambiente Acolhedor", desc: "Espaço pensado para seu conforto e relaxamento." },
+      { title: "Atendimento Personalizado", desc: "Cada cliente recebe atenção exclusiva do início ao fim." },
+    ],
     reviews: [
       { name: "Camila R.", text: "Melhor salão que já fui! A equipe é super atenciosa e o resultado ficou incrível.", rating: 5 },
       { name: "Fernanda S.", text: "Fiz minhas mechas e amei. Ambiente lindo e atendimento impecável.", rating: 5 },
@@ -60,6 +66,7 @@ const nicheContentMap: Record<string, NicheContent> = {
     ctaText: "Agendar agora",
     whatsappMessage: "Olá! Gostaria de agendar um horário no salão.",
     nameSuffix: "Hair Studio",
+    style: "visual",
   },
   "barbearia": {
     heroTitle: "Cortes precisos e\nbarba impecável",
@@ -76,6 +83,12 @@ const nicheContentMap: Record<string, NicheContent> = {
       { title: "Pigmentação", desc: "Pigmentação capilar para um visual mais denso e natural." },
       { title: "Tratamentos", desc: "Hidratação capilar, limpeza de pele e cuidados especiais." },
     ],
+    differentials: [
+      { title: "Ambiente Exclusivo", desc: "Espaço masculino com cerveja, café e Wi-Fi." },
+      { title: "Sem Hora Marcada", desc: "Atendimento por ordem de chegada, sem burocracia." },
+      { title: "Produtos Importados", desc: "Pomadas, óleos e ceras das melhores marcas." },
+      { title: "Experiência Completa", desc: "Corte + barba + toalha quente em cada atendimento." },
+    ],
     reviews: [
       { name: "Ricardo L.", text: "Melhor barbearia da cidade! Corte impecável e ambiente top.", rating: 5 },
       { name: "Lucas M.", text: "Barba e corte sempre no ponto. Recomendo demais!", rating: 5 },
@@ -86,6 +99,7 @@ const nicheContentMap: Record<string, NicheContent> = {
     ctaText: "Agendar horário",
     whatsappMessage: "Olá! Quero agendar um corte.",
     nameSuffix: "Barber Shop",
+    style: "visual",
   },
   "estética": {
     heroTitle: "Harmonização e estética\ncom resultados reais",
@@ -102,6 +116,12 @@ const nicheContentMap: Record<string, NicheContent> = {
       { title: "Limpeza de Pele", desc: "Limpeza profunda com extração, peeling e hidratação intensiva." },
       { title: "Microagulhamento", desc: "Estímulo de colágeno para rejuvenescimento e tratamento de cicatrizes." },
     ],
+    differentials: [
+      { title: "Profissionais Certificados", desc: "Equipe com formação especializada e certificações atualizadas." },
+      { title: "Resultados Naturais", desc: "Foco em harmonização que respeita seus traços únicos." },
+      { title: "Equipamentos de Ponta", desc: "Tecnologia avançada para procedimentos seguros." },
+      { title: "Avaliação Gratuita", desc: "Consulta inicial sem compromisso para entender seus objetivos." },
+    ],
     reviews: [
       { name: "Isabela F.", text: "Resultado super natural! A profissional é muito cuidadosa.", rating: 5 },
       { name: "Renata C.", text: "Fiz harmonização e amei. Atendimento excelente.", rating: 5 },
@@ -112,6 +132,7 @@ const nicheContentMap: Record<string, NicheContent> = {
     ctaText: "Agendar avaliação",
     whatsappMessage: "Olá! Gostaria de agendar uma avaliação estética.",
     nameSuffix: "Estética Avançada",
+    style: "visual",
   },
   "clínica odontológica": {
     heroTitle: "Seu sorriso merece\no melhor tratamento",
@@ -128,6 +149,12 @@ const nicheContentMap: Record<string, NicheContent> = {
       { title: "Ortodontia", desc: "Aparelhos fixos, alinhadores invisíveis e ortodontia estética." },
       { title: "Lentes de Contato", desc: "Lentes de contato dental para um sorriso perfeito e harmônico." },
     ],
+    differentials: [
+      { title: "Tecnologia Digital", desc: "Radiografia digital, scanner 3D e planejamento virtual." },
+      { title: "Sedação Consciente", desc: "Procedimentos sem dor com técnicas de sedação seguras." },
+      { title: "Equipe Multidisciplinar", desc: "Especialistas em todas as áreas da odontologia." },
+      { title: "Facilidade de Pagamento", desc: "Parcelamento em até 12x e convênios aceitos." },
+    ],
     reviews: [
       { name: "Mariana T.", text: "Fiz meu clareamento aqui e o resultado superou minhas expectativas!", rating: 5 },
       { name: "Carlos H.", text: "Equipe incrível, atendimento humanizado e profissional.", rating: 5 },
@@ -138,6 +165,7 @@ const nicheContentMap: Record<string, NicheContent> = {
     ctaText: "Agendar consulta",
     whatsappMessage: "Olá! Gostaria de agendar uma consulta.",
     nameSuffix: "Odontologia",
+    style: "trust",
   },
   "fisioterapia": {
     heroTitle: "Recuperação e bem-estar\ncom tratamento especializado",
@@ -154,6 +182,12 @@ const nicheContentMap: Record<string, NicheContent> = {
       { title: "Terapia Manual", desc: "Técnicas manuais para alívio de dores e tensões musculares." },
       { title: "RPG", desc: "Reeducação postural global para correção e prevenção de problemas." },
     ],
+    differentials: [
+      { title: "Atendimento Individual", desc: "Sessões individuais com atenção exclusiva ao paciente." },
+      { title: "Profissionais CREFITO", desc: "Equipe registrada e com especializações reconhecidas." },
+      { title: "Equipamentos Modernos", desc: "Aparelhos de última geração para reabilitação eficiente." },
+      { title: "Plano de Tratamento", desc: "Protocolo personalizado com metas claras de recuperação." },
+    ],
     reviews: [
       { name: "Roberto N.", text: "Recuperei meu joelho em poucas semanas. Profissionais excelentes!", rating: 5 },
       { name: "Sandra L.", text: "O pilates mudou minha postura. Me sinto muito melhor.", rating: 5 },
@@ -164,6 +198,7 @@ const nicheContentMap: Record<string, NicheContent> = {
     ctaText: "Agendar sessão",
     whatsappMessage: "Olá! Gostaria de agendar uma sessão de fisioterapia.",
     nameSuffix: "Fisioterapia",
+    style: "trust",
   },
   "pet shop": {
     heroTitle: "Cuidado completo\npara seu pet",
@@ -180,6 +215,12 @@ const nicheContentMap: Record<string, NicheContent> = {
       { title: "Ração e Acessórios", desc: "Rações premium, brinquedos, camas e acessórios selecionados." },
       { title: "Hotel Pet", desc: "Hospedagem segura e confortável para seu pet enquanto você viaja." },
     ],
+    differentials: [
+      { title: "Carinho com Animais", desc: "Equipe apaixonada que trata seu pet como família." },
+      { title: "Transporte Leva e Traz", desc: "Buscamos e entregamos seu pet no conforto de casa." },
+      { title: "Produtos Hipoalergênicos", desc: "Shampoos e condicionadores especiais para peles sensíveis." },
+      { title: "Acompanhamento em Tempo Real", desc: "Fotos e vídeos do seu pet durante o banho." },
+    ],
     reviews: [
       { name: "Daniela P.", text: "Meu cachorro ama ir lá! Equipe super carinhosa.", rating: 5 },
       { name: "Gustavo R.", text: "Melhor pet shop da região. Produtos de qualidade e bom preço.", rating: 5 },
@@ -190,6 +231,7 @@ const nicheContentMap: Record<string, NicheContent> = {
     ctaText: "Agendar banho",
     whatsappMessage: "Olá! Gostaria de agendar um banho para meu pet.",
     nameSuffix: "Pet Shop",
+    style: "visual",
   },
   "oficina mecânica": {
     heroTitle: "Mecânica de confiança\ncom garantia de serviço",
@@ -206,6 +248,12 @@ const nicheContentMap: Record<string, NicheContent> = {
       { title: "Suspensão e Freios", desc: "Troca de amortecedores, pastilhas, discos e alinhamento." },
       { title: "Ar Condicionado", desc: "Carga de gás, limpeza de dutos e manutenção do sistema." },
     ],
+    differentials: [
+      { title: "Diagnóstico Computadorizado", desc: "Scanner automotivo para identificação precisa de falhas." },
+      { title: "Garantia de Serviço", desc: "Todos os serviços com garantia de 90 dias." },
+      { title: "Orçamento Transparente", desc: "Você aprova o valor antes de qualquer serviço ser executado." },
+      { title: "Peças Originais", desc: "Trabalhamos apenas com peças originais ou de primeira linha." },
+    ],
     reviews: [
       { name: "Rodrigo A.", text: "Oficina honesta e competente. Sempre levo meu carro lá.", rating: 5 },
       { name: "Paulo C.", text: "Fizeram a revisão completa rápido e com ótimo preço.", rating: 5 },
@@ -216,21 +264,28 @@ const nicheContentMap: Record<string, NicheContent> = {
     ctaText: "Agendar serviço",
     whatsappMessage: "Olá! Gostaria de agendar um serviço para meu veículo.",
     nameSuffix: "Auto Center",
+    style: "urgency",
   },
   "baterias": {
-    heroTitle: "Baterias automotivas\ncom entrega e instalação",
+    heroTitle: "Baterias automotivas\ncom entrega imediata",
     heroSubtitle: "As melhores marcas com garantia de fábrica. Entrega rápida e instalação no local.",
     heroImage: heroBatteries,
     aboutLabel: "Sobre nós",
     aboutHeading: "Especialistas em\nbaterias automotivas",
     aboutText: "Trabalhamos com as melhores marcas do mercado: Moura, Heliar, Zetta e ACDelco. Entrega e instalação rápida para você não ficar na mão.",
     servicesLabel: "Nossos serviços",
-    servicesHeading: "Soluções em baterias",
+    servicesHeading: "Soluções rápidas em baterias",
     services: [
       { title: "Baterias para Carros", desc: "Baterias novas para todos os modelos com garantia de fábrica." },
       { title: "Baterias para Motos", desc: "Baterias específicas para motos com instalação inclusa." },
       { title: "Carga e Teste", desc: "Teste de bateria gratuito e serviço de carga quando possível." },
       { title: "Entrega Expressa", desc: "Entrega e instalação no local em até 40 minutos." },
+    ],
+    differentials: [
+      { title: "Atendimento 24h", desc: "Ligou, chegamos. Atendimento a qualquer hora do dia." },
+      { title: "Instalação no Local", desc: "Entregamos e instalamos onde você estiver." },
+      { title: "Teste Gratuito", desc: "Diagnóstico completo da bateria sem custo." },
+      { title: "Garantia de Fábrica", desc: "Todas as baterias com garantia oficial do fabricante." },
     ],
     reviews: [
       { name: "João V.", text: "Entregaram e instalaram em 30 minutos. Serviço excelente!", rating: 5 },
@@ -242,6 +297,7 @@ const nicheContentMap: Record<string, NicheContent> = {
     ctaText: "Pedir orçamento",
     whatsappMessage: "Olá! Preciso de uma bateria. Qual o preço?",
     nameSuffix: "Baterias",
+    style: "urgency",
   },
   "restaurante": {
     heroTitle: "Sabores autênticos\ne ingredientes frescos",
@@ -258,6 +314,12 @@ const nicheContentMap: Record<string, NicheContent> = {
       { title: "Sobremesas", desc: "Doces artesanais que encerram a refeição com chave de ouro." },
       { title: "Drinks", desc: "Coquetéis exclusivos e carta de vinhos selecionada." },
     ],
+    differentials: [
+      { title: "Ingredientes Frescos", desc: "Fornecedores locais selecionados para máxima qualidade." },
+      { title: "Chef Especializado", desc: "Cozinha autoral com toque de criatividade em cada prato." },
+      { title: "Ambiente Agradável", desc: "Espaço aconchegante para momentos especiais." },
+      { title: "Reserva Online", desc: "Agende sua mesa pelo WhatsApp sem complicação." },
+    ],
     reviews: [
       { name: "Ana C.", text: "Comida maravilhosa! Ambiente perfeito para um jantar especial.", rating: 5 },
       { name: "Roberto F.", text: "Pratos incríveis e atendimento impecável.", rating: 5 },
@@ -267,6 +329,7 @@ const nicheContentMap: Record<string, NicheContent> = {
     footerTagline: "Sabor, tradição e momentos especiais.",
     ctaText: "Fazer reserva",
     whatsappMessage: "Olá! Gostaria de fazer uma reserva.",
+    style: "visual",
   },
   "hamburgueria": {
     heroTitle: "Hambúrgueres artesanais\nde verdade",
@@ -283,6 +346,12 @@ const nicheContentMap: Record<string, NicheContent> = {
       { title: "Combos", desc: "Hambúrguer + batata + bebida com preço especial." },
       { title: "Delivery", desc: "Entrega rápida na sua casa com embalagem que mantém a qualidade." },
     ],
+    differentials: [
+      { title: "Blend Exclusivo", desc: "Mistura artesanal de carnes nobres preparada diariamente." },
+      { title: "Pão Artesanal", desc: "Pão brioche feito na casa para cada hambúrguer." },
+      { title: "Delivery Rápido", desc: "Entrega em até 40 minutos na região." },
+      { title: "Embalagem Premium", desc: "Seu hambúrguer chega quente e com qualidade de restaurante." },
+    ],
     reviews: [
       { name: "Thiago R.", text: "Melhor hambúrguer que já comi! Blend absurdo.", rating: 5 },
       { name: "Camila N.", text: "Batata rústica e milk shake incríveis. Voltarei sempre!", rating: 5 },
@@ -292,6 +361,7 @@ const nicheContentMap: Record<string, NicheContent> = {
     footerTagline: "Hambúrgueres artesanais que conquistam.",
     ctaText: "Fazer pedido",
     whatsappMessage: "Olá! Quero fazer um pedido.",
+    style: "visual",
   },
   "marmitaria": {
     heroTitle: "Comida caseira de qualidade\ntodo dia na sua mesa",
@@ -308,6 +378,12 @@ const nicheContentMap: Record<string, NicheContent> = {
       { title: "Marmita Executiva", desc: "Porção reforçada com duas proteínas e acompanhamentos extras." },
       { title: "Entrega", desc: "Entrega rápida no seu trabalho ou residência." },
     ],
+    differentials: [
+      { title: "Feita no Dia", desc: "Preparamos tudo fresco, diariamente, sem congelamento." },
+      { title: "Porções Generosas", desc: "Quantidade de verdade que satisfaz na refeição." },
+      { title: "Entrega Pontual", desc: "Chega no horário certo para seu almoço." },
+      { title: "Cardápio Variado", desc: "Opções diferentes todos os dias da semana." },
+    ],
     reviews: [
       { name: "Alessandra M.", text: "Comida caseira de verdade! Tempero perfeito e porção generosa.", rating: 5 },
       { name: "Bruno T.", text: "Peço todo dia pro trabalho. Sempre chega quente e no horário.", rating: 5 },
@@ -317,6 +393,7 @@ const nicheContentMap: Record<string, NicheContent> = {
     footerTagline: "Comida caseira, fresca e com sabor de verdade.",
     ctaText: "Fazer pedido",
     whatsappMessage: "Olá! Gostaria de fazer um pedido de marmita.",
+    style: "default",
   },
   "academia": {
     heroTitle: "Treinos que transformam\nseu corpo e mente",
@@ -333,6 +410,12 @@ const nicheContentMap: Record<string, NicheContent> = {
       { title: "Spinning", desc: "Aulas energéticas de ciclismo indoor com instrutores motivadores." },
       { title: "Yoga", desc: "Práticas para equilíbrio, flexibilidade e bem-estar mental." },
     ],
+    differentials: [
+      { title: "Avaliação Física Gratuita", desc: "Avaliação completa com bioimpedância para montar seu treino." },
+      { title: "Aula Experimental", desc: "Venha conhecer sem compromisso antes de se matricular." },
+      { title: "Instrutores Qualificados", desc: "CREF ativo e especializações em performance." },
+      { title: "Aberta 6h às 23h", desc: "Horário flexível para encaixar no seu dia a dia." },
+    ],
     reviews: [
       { name: "Diego S.", text: "Melhor academia que já treinei! Instrutores excelentes.", rating: 5 },
       { name: "Larissa K.", text: "Perdi 15kg com o acompanhamento deles. Mudou minha vida!", rating: 5 },
@@ -342,6 +425,7 @@ const nicheContentMap: Record<string, NicheContent> = {
     footerTagline: "Saúde, movimento e superação.",
     ctaText: "Agendar aula experimental",
     whatsappMessage: "Olá! Quero agendar uma aula experimental.",
+    style: "visual",
   },
   "imobiliária": {
     heroTitle: "O imóvel ideal\nestá aqui",
@@ -358,6 +442,12 @@ const nicheContentMap: Record<string, NicheContent> = {
       { title: "Avaliação", desc: "Avaliação de mercado para precificação justa do seu imóvel." },
       { title: "Financiamento", desc: "Orientação e simulação de financiamento com os melhores bancos." },
     ],
+    differentials: [
+      { title: "Conhecimento Local", desc: "Equipe que conhece cada bairro e região em detalhes." },
+      { title: "Assessoria Jurídica", desc: "Suporte completo com documentação e contratos." },
+      { title: "Visitas Agendadas", desc: "Visitamos os imóveis com você no horário mais conveniente." },
+      { title: "Simulação de Financiamento", desc: "Ajudamos a encontrar as melhores condições de pagamento." },
+    ],
     reviews: [
       { name: "Marina B.", text: "Encontraram o apartamento perfeito para minha família!", rating: 5 },
       { name: "Carlos E.", text: "Processo de compra super tranquilo. Equipe muito profissional.", rating: 5 },
@@ -368,6 +458,7 @@ const nicheContentMap: Record<string, NicheContent> = {
     ctaText: "Falar com corretor",
     whatsappMessage: "Olá! Tenho interesse em imóveis disponíveis.",
     nameSuffix: "Imóveis",
+    style: "trust",
   },
   "contabilidade": {
     heroTitle: "Contabilidade que\nfaz seu negócio crescer",
@@ -384,6 +475,12 @@ const nicheContentMap: Record<string, NicheContent> = {
       { title: "Departamento Pessoal", desc: "Folha de pagamento, admissão, rescisão e obrigações trabalhistas." },
       { title: "Planejamento Tributário", desc: "Análise e escolha do melhor regime tributário para sua empresa." },
     ],
+    differentials: [
+      { title: "Atendimento Personalizado", desc: "Contador dedicado para sua empresa com contato direto." },
+      { title: "100% Digital", desc: "Toda documentação e assinatura feitas online." },
+      { title: "Suporte Rápido", desc: "Respostas em até 24h para suas dúvidas e demandas." },
+      { title: "Economia Fiscal", desc: "Planejamento tributário para pagar menos impostos legalmente." },
+    ],
     reviews: [
       { name: "Marcos R.", text: "Escritório sério e competente. Resolvem tudo rapidamente.", rating: 5 },
       { name: "Amanda S.", text: "Abriram minha empresa em poucos dias. Atendimento excelente.", rating: 5 },
@@ -394,6 +491,7 @@ const nicheContentMap: Record<string, NicheContent> = {
     ctaText: "Falar com contador",
     whatsappMessage: "Olá! Gostaria de informações sobre serviços contábeis.",
     nameSuffix: "Contabilidade",
+    style: "trust",
   },
 };
 
@@ -413,11 +511,18 @@ const defaultContent: NicheContent = {
     { title: "Ambiente Acolhedor", desc: "Espaço pensado para seu conforto e bem-estar." },
     { title: "Tecnologia Moderna", desc: "Equipamentos e técnicas de última geração." },
   ],
+  differentials: [
+    { title: "Atendimento Rápido", desc: "Respostas ágeis e atendimento sem burocracia." },
+    { title: "Qualidade Garantida", desc: "Comprometimento com excelência em cada serviço." },
+    { title: "Experiência Comprovada", desc: "Anos de atuação no mercado local." },
+    { title: "Localização Privilegiada", desc: "Fácil acesso e estacionamento disponível." },
+  ],
   reviews: [],
   reviewCount: 0,
   footerTagline: "Qualidade e dedicação em cada detalhe.",
   ctaText: "Falar no WhatsApp",
   whatsappMessage: "Olá! Gostaria de mais informações.",
+  style: "default",
 };
 
 export function getNicheContent(niche: string): NicheContent {
